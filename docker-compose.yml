@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+
+  backend:
+    build: ./backend
+    container_name: dp-backend
+    ports:
+      - "8080:8080"
+    networks:
+      - app-net
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+
+  frontend:
+    build: ./frontend
+    container_name: dp-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    networks:
+      - app-net
+
+networks:
+  app-net:
+    driver: bridge
